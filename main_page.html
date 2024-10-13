@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Rental Services</title>
+    <link rel="icon" href="https://static.vecteezy.com/system/resources/thumbnails/004/873/860/small/vk-brush-stroke-letter-logo-design-black-paint-logo-leters-icon-vector.jpg">
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.video-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.video-container video {
+    width: 100%;
+    height: auto;
+}
+
+.nav {
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo {
+    height: 65px; /* Adjust logo height */
+    border-radius: 20% 5%;
+}
+
+.logo-text {
+    text-align: left;
+}
+
+.logo-text h1,
+.logo-text p {
+    color: #fff;
+}
+
+.nav-links {
+    display: flex;
+    gap: 150px;
+    margin-left: 120%;
+    margin-top: -37px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff; /* White text color */
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.nav-links a:hover {
+    color: #007BFF; /* Change this to your preferred hover color */
+}
+
+
+        /* Additional styles for rental form, categories, and footer can be added here */
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video src="1037303012-preview.mp4" autoplay muted loop></video>
+        <div class="nav">
+            <nav>
+                <div class="logo-container">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/004/873/860/small/vk-brush-stroke-letter-logo-design-black-paint-logo-leters-icon-vector.jpg" alt="Velocity Keys Logo" class="logo">
+                    <div class="logo-text">
+                        <h1>Velocity Keys</h1>
+                        <p>Keys to Your Biking Freedom</p>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="#about">About</a>
+                    <a href="contact_page.html">Contact</a>
+                    <a href="login.html">Login</a>
+                </div>
+            </nav>
+        </div>
+        <div class="centered-message"><p>Two wheels, one love! <br> Rent a Bike Today at <br> Just 100 Rs/day</p></div> 
+    </div>
+    <div class="data">
+        <div class="rental-form">
+            <div class="form-group">
+                <label for="pickup-location">Pick-up location</label>
+                <select id="pickup-location">
+                    <option value="marathahalli">Marathahalli (Behind @ Home)</option>
+                    <option value="tin-factory">Tin Factory (Behind @ Home)</option>
+                    <option value="hebbala">Hebbala (Behind @ Home)</option>
+                    <option value="rajanukunta">Rajanukunta (Behind @ Home)</option>
+                    <option value="indranagar">Indranagar (Behind @ Home)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="pickup-date">Pick-up date</label>
+                <input type="date" id="pickup-date" value="2024-10-06">
+            </div>
+            <div class="form-group">
+                <label for="pickup-time">Time</label>
+                <input type="time" id="pickup-time" value="20:30">
+            </div>
+            <div class="form-group">
+                <label for="dropoff-date">Drop-off date</label>
+                <input type="date" id="dropoff-date" value="2024-10-06">
+            </div>
+            <div class="form-group">
+                <label for="dropoff-time">Time</label>
+                <input type="time" id="dropoff-time" value="21:30">
+            </div>
+            <div class="form-group">
+                <button class="find-btn" onclick="window.location.href='rent.html'">Find ➜</button>
+            </div>
+        </div>
+    </div><br><br>
+    <h1>Rent By Category</h1>
+    <div class="catogry1">
+        <div class="vehical"><img src="https://rentelo-production.s3.ap-south-1.amazonaws.com/models/1692192778477-000000-scooter.svg" alt=""><br><h2>Scooter</h2></div>
+        <div class="vehical"><img src="https://rentelo-production.s3.ap-south-1.amazonaws.com/models/1695016810080-000000-sport.svg" alt=""><br><br><h2>Sports</h2></div>
+        <div class="vehical"><img src="https://rentelo-production.s3.ap-south-1.amazonaws.com/models/1695016773054-000000-Cruser.svg" alt=""><br><br><h2>Cruiser</h2></div>
+        <div class="vehical"><img src="https://rentelo-production.s3.ap-south-1.amazonaws.com/models/1695016860507-000000-1691674974320-000000-commuter.svg" alt="" style="width: 100px;"><br><h2>Commuter</h2></div>
+    </div><br><br>
+    <div class="choice-section" id="about">
+        <h1>You Made the Right Choice.</h1>
+        <p>
+            Rentelo aims to make bike rental easy and solve India's mobility problems. Starting with 20 bikes at one location in 2024, we now have 1000+ bikes at 3 locations in Chennai, serving our customers with reliable and hassle-free rental services.
+        </p>
+        <div class="features" id="about">
+            <div class="feature-item">
+                <img src="https://www.rentelo.in/assets/images/icons/customer-support.svg" alt="Customer Support Icon">
+                <h3>24/7 Customer Support</h3>
+                <p>Our support team is available round the clock to assist customers.</p>
+            </div>
+            <div class="feature-item">
+                <img src="https://www.rentelo.in/assets/images/icons/deposit.svg" alt="No Security Deposit Icon">
+                <h3>No Security Deposit</h3>
+                <p>Rent a bike without paying any security deposit upfront.</p>
+            </div>
+            <div class="feature-item">
+                <img src="https://www.rentelo.in/assets/images/icons/refund.svg" alt="Refund Icon">
+                <h3>No questions asked refund</h3>
+                <p>We ensure customers receive full refund without any questions asked.</p>
+            </div>
+        </div>
+    </div><br>
+
+    <footer>
+        <div class="footer">
+            <div class="div1">
+                <h3>Company :</h3>
+                <div class="divt">
+                    <p>Rentxyz</p>
+                    <p>The best platform to Rent the Two Wheeler</p>
+                </div>
+            </div>
+
+            <div class="div1">
+                <h3>Policy :</h3>
+                <div class="divt">
+                    <p>FAQS</p>
+                    <p>Drive at Your Own Risk</p>
+                </div>
+            </div>
+            <div class="div1">
+                <h3>Contact :</h3>
+                <div class="divt">
+                    <p><i class="fa-solid fa-phone"></i> : Call Us</p>
+                    <p><i class="fa-solid fa-envelopes-bulk"></i> : Support@companymail.com</p>
+                </div>
+            </div>
+            <div class="div1">
+                <h3>Social Media</h3>
+                <div class="divt">
+                    <i class="fa-brands fa-instagram" data-name="Instagram"></i>
+                    <i class="fa-brands fa-twitter" data-name="Twitter"></i>
+                    <i class="fa-brands fa-facebook" data-name="Facebook"></i>
+                    <i class="fa-brands fa-linkedin" data-name="LinkedIn"></i>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- <div class="final">
+            <h1>ALL RIGHTS RESERVED & DESIGNED <br> BY</h1><br>
+            <p><span>V</span>
+                <span>I</span>
+                <span>S</span>
+                <span>H</span>
+                <span>N</span>
+                <span>U</span>
+                <span>V</span>
+                <span>A</span>
+                <span>R</span>
+                <span>D</span>
+                <span>H</span>
+                <span>A</span>
+                <span>N</span> 
+            </p>
+        </div> -->
+    </footer>
+</body>
+</html>

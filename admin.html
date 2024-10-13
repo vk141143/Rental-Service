@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://static.vecteezy.com/system/resources/thumbnails/004/873/860/small/vk-brush-stroke-letter-logo-design-black-paint-logo-leters-icon-vector.jpg">
+    <title>Admin Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            height: 80vh;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 1s ease-in-out;
+        }
+
+        h2 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        label {
+            color: #ccc;
+        }
+
+        .form-container {
+            max-width: 310px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 100px;
+            backdrop-filter: blur(30px);
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="number"] {
+            width: 90%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: transparent;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Add a New Vehicle</h2>
+        <form id="vehicleForm">
+            <label for="imageSrc">Image URL:</label>
+            <input type="text" id="imageSrc" placeholder="Enter image URL" required>
+
+            <label for="vehicleName">Vehicle Name:</label>
+            <input type="text" id="vehicleName" placeholder="Enter vehicle name" required>
+
+            <label for="rentPerDay">Rent Per Day:</label>
+            <input type="number" id="rentPerDay" placeholder="Enter rent per day (₹)" required>
+
+            <label for="limit">Limit (Km):</label>
+            <input type="number" id="limit" placeholder="Enter Km limit" required>
+
+            <label for="pickupLocation">Pickup Location:</label>
+            <input type="text" id="pickupLocation" placeholder="Enter pickup location" required>
+            
+            <label for="brand">Vehicle Brand:</label>
+            <input type="text" id="brand" placeholder="Enter vehicle brand" required>
+
+            <button type="submit">Add Vehicle</button>
+        </form>
+    </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById('vehicleForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form values
+            const imageSrc = document.getElementById('imageSrc').value;
+            const vehicleName = document.getElementById('vehicleName').value;
+            const rentPerDay = document.getElementById('rentPerDay').value;
+            const limit = document.getElementById('limit').value;
+            const pickupLocation = document.getElementById('pickupLocation').value;
+            const brand = document.getElementById('brand').value; // Get the brand value
+
+            // Create a vehicle object
+            const newVehicle = {
+                imageSrc,
+                vehicleName,
+                rentPerDay,
+                limit,
+                pickupLocation,
+                brand // Include the brand in the object
+            };
+
+            // Save data to localStorage
+            let vehicles = JSON.parse(localStorage.getItem('vehicles')) || [];
+            vehicles.push(newVehicle);
+            localStorage.setItem('vehicles', JSON.stringify(vehicles));
+
+            // Clear the form
+            document.getElementById('vehicleForm').reset();
+
+            alert('Vehicle added successfully!');
+        });
+
+        // Background image change every 5 seconds
+        const images = [
+            "https://images2.alphacoders.com/105/thumb-1920-1050310.jpg",
+            "https://motionbgs.com/media/919/the-batcave-throne.jpg",
+            "https://wallpaper.forfun.com/fetch/3b/3b07d02b478400f439e08779332866a6.jpeg",
+            "https://c4.wallpaperflare.com/wallpaper/372/312/55/hollywood-movies-spiderman-wallpaper-preview.jpg"
+        ];
+
+        let currentIndex = 0;
+
+        function changeBackground() {
+            document.body.style.backgroundImage = `url(${images[currentIndex]})`;
+            currentIndex = (currentIndex + 1) % images.length; 
+        }
+
+        // Initial background set and interval for changing images
+        changeBackground(); 
+        setInterval(changeBackground, 5000); 
+
+    </script>
+</body>
+</html>

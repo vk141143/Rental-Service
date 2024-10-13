@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Rental Payment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="https://static.vecteezy.com/system/resources/thumbnails/004/873/860/small/vk-brush-stroke-letter-logo-design-black-paint-logo-leters-icon-vector.jpg">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px 0 20px;
+            width: 90%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            flex: 1;
+            margin: 5px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .pay-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .pay-btn:hover {
+            background-color: #218838;
+        }
+
+        .qr-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .qr-btn:hover {
+            background-color: #0069d9;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .modal-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-close:hover,
+        .modal-close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Payment Details</h1>
+
+        <form id="payment-form">
+            <label for="vehicle-name">Vehicle</label>
+            <input type="text" id="vehicle-name" name="data[vehiclename]" readonly>
+
+            <label for="name">Name</label>
+            <input type="text" id="name" name="data[name]" placeholder="Your name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="data[email]" placeholder="Your email" required>
+
+            <label for="id-proof">ID Proof</label>
+            <input type="text" id="id-proof" name="data[idproof]" placeholder="ID Proof (e.g., Aadhar, DL)" required>
+
+            <label for="pickup-date-modal">Pick-up Date</label>
+            <input type="date" id="pickup-date-modal" name="data[pickupdate]" required>
+
+            <label for="pickup-time-modal">Pick-up Time</label>
+            <input type="time" id="pickup-time-modal" name="data[pickuptime]" required>
+
+            <label for="dropoff-date-modal">Drop-off Date</label>
+            <input type="date" id="dropoff-date-modal" name="data[dropoffdate]" required>
+
+            <label for="dropoff-time-modal">Drop-off Time</label>
+            <input type="time" id="dropoff-time-modal" name="data[dropofftime]" required>
+
+            <label for="payment">Price</label>
+            <input type="number" id="price" name="data[price]" required>
+        </form>
+
+        <div class="button-group">
+            <button id="payment-button" class="btn pay-btn">Pay Now <i class="fas fa-credit-card"></i></button>
+            <button id="generate-qr-button" class="btn qr-btn">Generate QR Code <i class="fas fa-qrcode"></i></button>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeQrModal();">&times;</span>
+            <div id="qrCode"></div>
+            <p id="qr-time-left"></p>
+        </div>
+    </div>
+
+    <script>
+        // Fetch the rental data from the API
+        function fetchRentalData() {
+            const apiUrl = 'https://sheetdb.io/api/v1/ol267mw9snawj'; // Your API URL
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        // Assuming the first entry is the relevant one
+                        const rentalData = data[0];
+
+                        document.getElementById('vehicle-name').value = rentalData.vehiclename || '';
+                        document.getElementById('name').value = rentalData.name || '';
+                        document.getElementById('email').value = rentalData.email || '';
+                        document.getElementById('id-proof').value = rentalData.idproof || '';
+                        document.getElementById('pickup-date-modal').value = rentalData.pickupdate || '';
+                        document.getElementById('pickup-time-modal').value = rentalData.pickuptime || '';
+                        document.getElementById('dropoff-date-modal').value = rentalData.dropoffdate || '';
+                        document.getElementById('dropoff-time-modal').value = rentalData.dropofftime || '';
+                        document.getElementById('price').value = rentalData.price || 0;
+                    } else {
+                        alert('No rental data found.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching rental data:', error);
+                    alert('Failed to load rental details.');
+                });
+        }
+
+        // Call the function to load the rental data on page load
+        window.onload = fetchRentalData;
+
+        // QR Code generation
+        document.getElementById('generate-qr-button').addEventListener('click', function () {
+            const amount = document.getElementById('price').value;
+            const qrCodeContent = `Payment: ₹${amount}`;
+
+            $('#qrCode').empty();
+            $('#qrCode').qrcode(qrCodeContent);
+
+            document.getElementById('qrModal').style.display = 'block';
+            startQrTimer();
+        });
+
+        function startQrTimer() {
+            let timeLeft = 60;
+            const timer = document.getElementById('qr-time-left');
+            timer.innerText = `Valid for ${timeLeft} seconds`;
+
+            const countdown = setInterval(() => {
+                timeLeft--;
+                timer.innerText = `Valid for ${timeLeft} seconds`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    alert('QR code has expired!');
+                    closeQrModal();
+                }
+            }, 1000);
+        }
+
+        function closeQrModal() {
+            document.getElementById('qrModal').style.display = 'none';
+        }
+
+        // Placeholder for payment button
+        document.getElementById('payment-button').addEventListener('click', function () {
+            alert('Payment processing... (This is just a placeholder)');
+        });
+    </script>
+</body>
+</html>

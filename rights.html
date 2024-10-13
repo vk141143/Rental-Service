@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Animation</title>
+    <style>
+        /* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #111;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Container for Text */
+.container {
+    text-align: center;
+    position: relative;
+}
+
+/* Mini Heading "designed by" */
+.mini-heading {
+    font-size: 1.2rem;
+    color: #bbb;
+    letter-spacing: 2px;
+    animation: fadeIn 1.5s ease-in-out 0.5s forwards;
+    opacity: 0;
+}
+
+/* Main Title "Vishnu Vardhan" Letters */
+.main-title {
+    font-size: 4rem;
+    color: #e0e0e0;
+    text-transform: uppercase;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    animation: showTitle 1.5s ease-in-out 1s forwards;
+}
+
+/* Letter Flip Effect */
+.letter {
+    display: inline-block;
+    transform: rotateX(90deg); /* Initially hidden */
+    opacity: 0;
+    animation: flipIn 1.5s ease-in-out forwards;
+    animation-delay: calc(0.2s * var(--i)); /* Delay each letter's animation */
+}
+
+/* Set delay for each letter */
+.letter:nth-child(1) { --i: 0; }
+.letter:nth-child(2) { --i: 1; }
+.letter:nth-child(3) { --i: 2; }
+.letter:nth-child(4) { --i: 3; }
+.letter:nth-child(5) { --i: 4; }
+.letter:nth-child(6) { --i: 5; }
+.letter:nth-child(7) { --i: 6; }
+.letter:nth-child(8) { --i: 7; }
+.letter:nth-child(9) { --i: 8; }
+.letter:nth-child(10) { --i: 9; }
+.letter:nth-child(11) { --i: 10; }
+.letter:nth-child(12) { --i: 11; }
+.letter:nth-child(13) { --i: 12; }
+.letter:nth-child(14) { --i: 13; }
+
+/* Keyframes for Effects */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes showTitle {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes flipIn {
+    0% {
+        transform: rotateX(90deg);
+        opacity: 0;
+    }
+    50% {
+        transform: rotateX(45deg);
+        opacity: 0.5;
+    }
+    100% {
+        transform: rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="mini-heading">designed by</div>
+        <div class="main-title">
+            <span class="letter">V</span>
+            <span class="letter">i</span>
+            <span class="letter">s</span>
+            <span class="letter">h</span>
+            <span class="letter">n</span>
+            <span class="letter">u</span>
+            <span class="letter"> </span>
+            <span class="letter" style="margin-left: 18px;">V</span>
+            <span class="letter">a</span>
+            <span class="letter">r</span>
+            <span class="letter">d</span>
+            <span class="letter">h</span>
+            <span class="letter">a</span>
+            <span class="letter">n</span>
+        </div>
+        
+    </div>
+</body>
+</html>
