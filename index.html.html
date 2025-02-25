@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Signup Flip</title>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" href="https://static.vecteezy.com/system/resources/thumbnails/004/873/860/small/vk-brush-stroke-letter-logo-design-black-paint-logo-leters-icon-vector.jpg">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1s ease-in-out; /* Smooth transition between images */
+        }
+
+        .container {
+            perspective: 1000px;
+        }
+
+        .flip-card {
+            width: 300px;
+            height: 400px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(30px);
+            box-shadow: 0px 0px 30px;
+            border: 1.5px solid rgba(255, 255, 255, 0.18);
+            border-radius: 18px;
+        }
+
+        .flip-card-front {
+            z-index: 2;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid transparent;
+            background-color: transparent;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        input:focus {
+            animation: border-fill 0.5s forwards;
+        }
+
+        @keyframes border-fill {
+            0% {
+                border-bottom-color: #673ab7;
+                border-bottom-width: 2px;
+            }
+            25% {
+                border-bottom-color: #ddd;
+            }
+            50% {
+                border-bottom-color: green;
+            }
+            75% {
+                border-bottom-color: #913838;
+            }
+            100% {
+                border-bottom-color: blue;
+            }
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #673ab7;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #5a2caa;
+        }
+
+        p {
+            margin-top: 15px;
+        }
+
+        a {
+            color: #ddd;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Strength bar styles */
+        #passwordStrength {
+            height: 10px;
+            background-color: #ddd;
+            margin-top: 5px;
+            width: 100%;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #strengthBar {
+            height: 100%;
+            width: 0;
+            background-color: red;
+            transition: width 0.5s;
+        }
+
+        .weak {
+            background-color: red;
+        }
+
+        .medium {
+            background-color: orange;
+        }
+
+        .strong {
+            background-color: green;
+        }
+
+        #passwordError {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+        label,p{
+            color: #ddd;
+        }
+
+        /* Increase the height of the container for the Signup form */
+.flip-card-back {
+    height: 450px; /* Adjust height as needed */
+}
+
+/* Media Queries for Tablet Screens */
+@media (max-width: 768px) {
+    body{
+        background-size: cover;
+        background-position: center;
+    }
+    .flip-card {
+        width: 260px;
+        height: 400px; /* Increased height for the signup container */
+    }
+
+    .flip-card-back {
+        height: 400px; /* Increase height for signup container on tablet */
+    }
+
+    input, button {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    p, label {
+        font-size: 14px;
+    }
+}
+
+/* Media Queries for Mobile Screens */
+@media (max-width: 480px) {
+    body{
+        background-size: cover;
+        background-position: center;
+    }
+    .flip-card {
+        width: 220px;
+        height: 370px; /* Increased height for the signup container */
+    }
+
+    .flip-card-back {
+        height: 370px; /* Increase height for signup container on mobile */
+    }
+
+    input, button {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    p, label {
+        font-size: 12px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    #passwordStrength {
+        height: 8px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <!-- Login Page -->
+                <div class="flip-card-front">
+                    <h2>Login</h2>
+                    <form>
+                        <label for="loginEmail">Email:</label>
+                        <input type="email" id="loginEmail" placeholder="Enter Email" required>
+                        <label for="loginPassword">Password:</label>
+                        <input type="password" id="loginPassword" placeholder="Enter Password" required>
+                        <!-- <button type="submit" onclick="window.location.href='main_page.html'">Login</button> -->
+                        <button type="submit" onclick="login(event)">Login</button>
+
+                    </form>
+                    <p>Don't have an account? <a href="#" id="flipToSignup">Sign Up</a></p>
+                </div>
+                <!-- Signup Page -->
+                <div class="flip-card-back">
+                    <h2>Sign Up</h2>
+                    <form>
+                        <label for="signupEmail">Email:</label>
+                        <input type="email" id="signupEmail" placeholder="Enter Email" required>
+                        <label for="signupPassword">Password:</label>
+                        <div class="container">
+                            <input type="password" id="password" placeholder="Enter your password" onkeyup="checkPasswordStrength()">
+                            <div id="passwordStrength">
+                                <div id="strengthBar"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm Password" onkeyup="checkPasswordMatch()" required>
+                        <div id="passwordError">Passwords do not match</div>
+                        <br>
+                        <!-- <button type="submit" onclick="window.location.href='main_page.html'">Sign Up</button> -->
+                        <button type="submit" onclick="signUp(event)">Sign Up</button>
+
+                    </form>
+                    <p>Already have an account? <a href="#" id="flipToLogin">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // JavaScript to flip between login and signup
+        const flipCard = document.querySelector('.flip-card-inner');
+        const flipToSignup = document.getElementById('flipToSignup');
+        const flipToLogin = document.getElementById('flipToLogin');
+
+        flipToSignup.addEventListener('click', () => {
+            flipCard.style.transform = 'rotateY(180deg)';
+        });
+
+        flipToLogin.addEventListener('click', () => {
+            flipCard.style.transform = 'rotateY(0deg)';
+        });
+
+        // Password strength checker
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthBar = document.getElementById('strengthBar');
+
+            let strength = 0;
+
+            if (password.length > 5) strength++;
+            if (password.length > 7) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            if (password.length === 0) {
+                strengthBar.style.width = '0';
+                strengthBar.className = '';
+            } else {
+                switch (strength) {
+                    case 0:
+                    case 1:
+                        strengthBar.style.width = '33%';
+                        strengthBar.className = 'weak';
+                        break;
+                    case 2:
+                    case 3:
+                        strengthBar.style.width = '66%';
+                        strengthBar.className = 'medium';
+                        break;
+                    case 4:
+                    case 5:
+                        strengthBar.style.width = '100%';
+                        strengthBar.className = 'strong';
+                        break;
+                    default:
+                        strengthBar.style.width = '0';
+                        strengthBar.className = '';
+                }
+            }
+        }
+
+        // Confirm password matching
+        function checkPasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const passwordError = document.getElementById('passwordError');
+
+            if (password !== confirmPassword && confirmPassword.length > 0) {
+                passwordError.style.display = 'block';
+            } else {
+                passwordError.style.display = 'none';
+            }
+        }
+
+        // Background image change every 5 seconds
+        const images = [
+            "https://www.pcclean.io/wp-content/uploads/2020/04/98109236fc8bf44d1eeecb4403d3c177-scaled.jpg",    
+        // "https://images4.alphacoders.com/107/1071161.jpg",
+            // "https://content.jdmagicbox.com/v2/comp/indore/a5/0731px731.x731.221217165512.k3a5/catalogue/indore-bike-rent-indra-nagar-indore-bike-on-rent-5nyniwb6xw.jpg",
+            "https://wallpapercave.com/wp/wp8488396.jpg",
+            "https://www.pixel4k.com/wp-content/uploads/2018/03/Black%20Panther%202018%204K%208K783307973-768x480.jpg",
+            "https://wallpapercave.com/wp/wp5187183.jpg",
+            // "https://www.pixel4k.com/wp-content/uploads/2019/08/ghost-rider-on-bike_1565054128-2048x1152.jpg"
+            "https://wallpapers.com/images/hd/vintage-ghost-rider-l34iamubz4b7eis0.webp"
+        ];
+
+        let currentIndex = 0;
+
+        function changeBackground() {
+            document.body.style.backgroundImage = `url(${images[currentIndex]})`;
+            currentIndex = (currentIndex + 1) % images.length; // Cycle through images
+        }
+
+        // Initial background set and interval for changing images
+        changeBackground(); // Set the first image
+        setInterval(changeBackground, 5000); // Change every 5 seconds
+
+        function signUp(event) {
+    event.preventDefault(); // Prevents form submission
+    window.location.href = 'main_page.html'; // Redirect to main page
+}
+
+function login(event) {
+    event.preventDefault(); // Prevents form submission
+    window.location.href = 'main_page.html'; // Redirect to main page
+}
+
+    </script>
+</body>
+</html>
